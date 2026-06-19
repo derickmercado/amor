@@ -103,13 +103,11 @@
   #stage{ position:relative; min-height:100vh; width:100%; overflow:hidden; }
 
   #progress{
-    position:absolute; top:max(14px,env(safe-area-inset-top)); left:50%; transform:translateX(-50%);
-    z-index:38; padding:.55rem 1.4rem; border-radius:20px;
+    position:absolute; top:max(18px,env(safe-area-inset-top)); left:50%; transform:translateX(-50%);
+    z-index:38; padding:.5rem 1.25rem; border-radius:999px;
     background:rgba(80,10,20,.55); backdrop-filter:blur(12px);
     border:1px solid rgba(255,120,140,.30);
-    font-size:.82rem; letter-spacing:.03em; color:#ffb3bc;
-    white-space:normal; text-align:center; width:max-content; max-width:min(88vw,420px);
-    line-height:1.45;
+    font-size:.82rem; letter-spacing:.04em; color:#ffb3bc; white-space:nowrap;
     box-shadow:0 6px 18px -10px rgba(0,0,0,.6);
   }
 
@@ -195,22 +193,17 @@
   }
   #letter.open{ display:flex; }
   #letter .card{
-    position:relative; width:min(94vw,460px);
+    position:relative; width:min(94vw,460px); max-height:88vh; overflow:auto;
     background:linear-gradient(160deg,#5a0e1c 0%,#3a0610 60%,#280408 100%);
     border:1px solid rgba(255,120,140,.22); border-radius:26px;
-    padding:1rem 2rem 2.1rem; text-align:center;
+    padding:2.4rem 2rem 2.1rem; text-align:center;
     box-shadow:0 40px 80px -20px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,140,160,.18);
-    overflow:visible;
-  }
-  #letter .card-scroll{
-    max-height:calc(88vh - 5rem); overflow-y:auto;
   }
   #letter .seal{
-    width:54px;height:54px;border-radius:50%;margin:0 auto 1rem;
+    width:54px;height:54px;border-radius:50%;margin:-3.6rem auto 1rem;
     display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;
     background:linear-gradient(135deg,#e8354e,#6e0a1c);
     box-shadow:0 10px 24px -8px rgba(209,33,58,.85);
-    position:relative; top:0;
   }
   #letter h2{ font-family:'Playfair Display',serif; color:#ffb3bc; font-size:1.7rem; margin:.2rem 0 1.1rem; text-shadow:0 2px 14px rgba(255,80,110,.4); }
   #letter .body{
@@ -310,12 +303,10 @@
 <div id="letter">
   <div class="card">
     <button class="close" id="closeNote" aria-label="close">✕</button>
-    <div class="card-scroll">
-      <div class="seal">♥</div>
-      <h2 class="serif" id="letterTitle"></h2>
-      <div class="body" id="letterBody"></div>
-      <div class="sign script" id="letterSign"></div>
-    </div>
+    <div class="seal">♥</div>
+    <h2 class="serif" id="letterTitle"></h2>
+    <div class="body" id="letterBody"></div>
+    <div class="sign script" id="letterSign"></div>
   </div>
 </div>
 
@@ -623,15 +614,13 @@ function showNote(text){
   gsap.killTweensOf(noteEl);
   gsap.timeline()
     .fromTo(noteEl,{opacity:0, y:18, scale:.9},{opacity:1, y:0, scale:1, duration:.6, ease:'power2.out'})
-    .to(noteEl,{opacity:0, y:-22, duration:.7, ease:'power2.in', delay:3.7});
+    .to(noteEl,{opacity:0, y:-22, duration:.7, ease:'power2.in', delay:1.1});
 }
 
 function updateProgress(){
   progEl.textContent = revealedClusters >= TOTAL
-    ? 'Your bouquet is complete  🌹'
+    ? 'You did it!!!!  🌹'
     : `Gathered ${picked} of ${TOTAL}`;
-  gsap.killTweensOf(progEl);
-  gsap.to(progEl,{ opacity:1, duration:.3, ease:'power2.out' });
 }
 
 function pick(ci, el){
@@ -762,7 +751,6 @@ $('#startBtn').addEventListener('click', ()=>{
   gsap.to(stage,{ opacity:1, duration:.8, ease:'power2.out' });
   gsap.from('#bouquet-wrap',{ y:60, opacity:0, duration:1, ease:'power3.out' });
   gsap.from('.floater',{ opacity:0, scale:.5, duration:.9, stagger:.1, delay:.4, ease:'back.out(1.6)' });
-  gsap.to(progEl,{ opacity:0, duration:.8, ease:'power2.in', delay:5 });
   ambientOn = true;
 });
 
