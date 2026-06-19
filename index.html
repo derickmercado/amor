@@ -630,6 +630,8 @@ function updateProgress(){
   progEl.textContent = revealedClusters >= TOTAL
     ? 'Your bouquet is complete  🌹'
     : `Gathered ${picked} of ${TOTAL}`;
+  gsap.killTweensOf(progEl);
+  gsap.to(progEl,{ opacity:1, duration:.3, ease:'power2.out' });
 }
 
 function pick(ci, el){
@@ -760,6 +762,7 @@ $('#startBtn').addEventListener('click', ()=>{
   gsap.to(stage,{ opacity:1, duration:.8, ease:'power2.out' });
   gsap.from('#bouquet-wrap',{ y:60, opacity:0, duration:1, ease:'power3.out' });
   gsap.from('.floater',{ opacity:0, scale:.5, duration:.9, stagger:.1, delay:.4, ease:'back.out(1.6)' });
+  gsap.to(progEl,{ opacity:0, duration:.8, ease:'power2.in', delay:5 });
   ambientOn = true;
 });
 
